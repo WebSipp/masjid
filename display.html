@@ -958,7 +958,7 @@
 <body>
     <!-- FULLSCREEN OVERLAY -->
     <div class="fullscreen-overlay" id="fullscreen-overlay">
-        <h2>Display Digital Masjid Baiturrahman</h2>
+        <h2>Display Digital Masjid Baiturrahman STMIK Tazkia</h2>
         <p>Untuk pengalaman terbaik, tampilan akan dibuka dalam mode layar penuh.</p>
         <button class="fullscreen-btn" id="enter-fullscreen-btn">
             <i class="fas fa-expand"></i> Buka Layar Penuh
@@ -1108,7 +1108,7 @@
         // ========================================
         
         // GANTI DENGAN URL HASIL DEPLOY GAS LO!
-        const API_URL = "https://script.google.com/macros/s/AKfycbwyW0B77J19qzIGN7pwXWGPHGuP41Pf2owTH5gJL0MzeqLyNUtqQ7ro8miAWgaJn_Cxvw/exec";
+        const API_URL = "https://script.google.com/macros/s/YOUR_DEPLOYED_URL_HERE/exec";
         
         // ========== GLOBAL VARIABLES ==========
         const prayerOrder = ["Subuh", "Syuruq", "Dzuhur", "Ashar", "Maghrib", "Isya"];
@@ -1359,9 +1359,7 @@
                 fallback.forEach((url, index) => {
                     const slide = document.createElement('div');
                     slide.className = `wallpaper-slide ${index === 0 ? 'active' : ''}`;
-                    const fileId = wallpaper.image_url.split('id=')[1];
-                    const thumbnailUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1920`;
-                    slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('${thumbnailUrl}')`;
+                    slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('${url}')`;
                     slide.style.backgroundSize = 'cover';
                     slide.style.backgroundPosition = 'center';
                     container.appendChild(slide);
@@ -1372,20 +1370,15 @@
             }
             
             wallpapersData.forEach((wallpaper, index) => {
-    const slide = document.createElement('div');
-    slide.className = `wallpaper-slide ${index === 0 ? 'active' : ''}`;
-    
-    let imageUrl = wallpaper.image_url;
-    if (imageUrl && imageUrl.includes('id=')) {
-        const fileId = imageUrl.split('id=')[1].split('&')[0]; // ambil ID aja
-        imageUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1920`;
-    }
-    
-    slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('${imageUrl}')`;
-    slide.style.backgroundSize = 'cover';
-    slide.style.backgroundPosition = 'center';
-    container.appendChild(slide);
-});
+                const slide = document.createElement('div');
+                slide.className = `wallpaper-slide ${index === 0 ? 'active' : ''}`;
+                slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('${wallpaper.image_url}')`;
+                slide.style.backgroundSize = 'cover';
+                slide.style.backgroundPosition = 'center';
+                container.appendChild(slide);
+            });
+            
+            wallpaperIndex = 0;
         }
         
         // ========== ANNOUNCEMENTS ==========
@@ -1406,12 +1399,7 @@
                 slide.className = `announcement-slide ${index === 0 ? 'active' : ''}`;
                 
                 const img = document.createElement('img');
-                let imageUrl = announcement.image_url;
-                if (imageUrl && imageUrl.includes('id=')) {
-                const fileId = imageUrl.split('id=')[1].split('&')[0];
-                imageUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1920`;
-                }
-                img.src = imageUrl;
+                img.src = announcement.image_url;
                 img.alt = `Pengumuman ${index + 1}`;
                 img.onerror = function() {
                     this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect fill="%23ddd" width="200" height="200"/><text fill="%23999" x="50%" y="50%" text-anchor="middle" dy=".3em">Gambar Error</text></svg>';
