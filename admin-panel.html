@@ -1082,8 +1082,8 @@
                             <div class="form-group"><label>Nama Masjid</label><input type="text" name="masjid_name" required></div>
                             <div class="form-group"><label>Alamat Masjid</label><textarea name="masjid_address" rows="3" required></textarea></div>
                             <div class="form-row">
-                                <div class="form-group"><label>Latitude</label><input type="text" name="latitude" required pattern="-?\d+\.?\d*" placeholder="-6.5456" title="Contoh: -6.5456"><small class="error-message" id="error-latitude"></small></div>
-                                <div class="form-group"><label>Longitude</label><input type="text" name="longitude" required pattern="-?\d+\.?\d*" placeholder="106.7367" title="Contoh: 106.7367"><small class="error-message" id="error-longitude"></small></div>
+                                <div class="form-group"><label>Latitude</label><input type="number" step="0.000001" name="latitude" required><small class="error-message" id="error-latitude"></small></div>
+                                <div class="form-group"><label>Longitude</label><input type="number" step="0.000001" name="longitude" required><small class="error-message" id="error-longitude"></small></div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group"><label>Timezone</label><select name="timezone" required><option value="Asia/Jakarta">Asia/Jakarta (WIB)</option><option value="Asia/Makassar">Asia/Makassar (WITA)</option><option value="Asia/Jayapura">Asia/Jayapura (WIT)</option></select></div>
@@ -1282,7 +1282,7 @@
         // ========================================
         
         // GANTI DENGAN URL HASIL DEPLOY GAS LO!
-        const API_URL = "https://script.google.com/macros/s/AKfycbwyW0B77J19qzIGN7pwXWGPHGuP41Pf2owTH5gJL0MzeqLyNUtqQ7ro8miAWgaJn_Cxvw/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbx-RU1xg-RKH0WIQe3J99oSKZo6HCKa6PmYxji2T7CnX5r4oYryu2qs8lCTzmpMRi3ibg/exec";
         
         // Global variables
         let wisdomsData = [];
@@ -2245,7 +2245,7 @@
             
             selectedAnnouncementFile = file;
             
-            const reader = new FileReader();
+            const reader = new FileReader();u
             reader.onload = (e) => {
                 document.getElementById('announcement-preview-img').src = e.target.result;
                 document.getElementById('announcement-filename').textContent = file.name;
