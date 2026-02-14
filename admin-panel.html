@@ -1,9 +1,10 @@
+<!-- FILE 2: admin-panel.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Masjid Al-Ikhlas</title>
+    <title>Admin Panel - Masjid Baiturrahman STMIK Tazkia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -1261,15 +1262,183 @@
     </div>
     
     <!-- MODALS -->
-    <div class="modal" id="wisdom-modal"><div class="modal-content"><span class="close" onclick="closeModal('wisdom-modal')">&times;</span><h2 id="wisdom-modal-title">Tambah Hikmah</h2><form id="wisdom-form"><input type="hidden" name="id"><div class="form-group"><label>Hari</label><select name="day" required><option value="monday">Senin</option><option value="tuesday">Selasa</option><option value="wednesday">Rabu</option><option value="thursday">Kamis</option><option value="friday">Jumat</option><option value="saturday">Sabtu</option><option value="sunday">Minggu</option></select></div><div class="form-group"><label>Urutan (1-3)</label><input type="number" name="order" min="1" max="3" required></div><div class="form-group"><label>Teks</label><textarea name="text" rows="4" required></textarea></div><div class="form-group"><label>Referensi</label><input type="text" name="reference" required></div><div class="form-group"><label>Tipe</label><div style="display: flex; gap: 20px;"><label><input type="radio" name="type" value="quran" checked> Quran</label><label><input type="radio" name="type" value="hadith"> Hadith</label></div></div><div class="form-group"><label><input type="checkbox" name="active" checked> Aktif</label></div><div class="modal-actions"><button type="submit" class="btn-primary"><i class="fas fa-save"></i> Simpan</button><button type="button" onclick="closeModal('wisdom-modal')" class="btn-secondary">Batal</button></div></form></div></div>
+    <div class="modal" id="wisdom-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('wisdom-modal')">&times;</span>
+            <h2 id="wisdom-modal-title">Tambah Hikmah</h2>
+            <form id="wisdom-form">
+                <input type="hidden" name="id">
+                <div class="form-group">
+                    <label>Hari</label>
+                    <select name="day" required>
+                        <option value="monday">Senin</option>
+                        <option value="tuesday">Selasa</option>
+                        <option value="wednesday">Rabu</option>
+                        <option value="thursday">Kamis</option>
+                        <option value="friday">Jumat</option>
+                        <option value="saturday">Sabtu</option>
+                        <option value="sunday">Minggu</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Urutan (1-3)</label>
+                    <input type="number" name="order" min="1" max="3" required>
+                </div>
+                <div class="form-group">
+                    <label>Teks</label>
+                    <textarea name="text" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Referensi</label>
+                    <input type="text" name="reference" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipe</label>
+                    <div style="display: flex; gap: 20px;">
+                        <label><input type="radio" name="type" value="quran" checked> Quran</label>
+                        <label><input type="radio" name="type" value="hadith"> Hadith</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" name="active" checked> Aktif</label>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Simpan</button>
+                    <button type="button" onclick="closeModal('wisdom-modal')" class="btn-secondary">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
     
-    <div class="modal" id="upload-wallpaper-modal"><div class="modal-content"><span class="close" onclick="closeModal('upload-wallpaper-modal')">&times;</span><h2>Upload Wallpaper</h2><div class="upload-area" id="wallpaper-upload-area"><input type="file" id="wallpaper-file" accept="image/*" style="display:none"><i class="fas fa-cloud-upload-alt"></i><p>Drag & drop atau klik untuk browse</p><small>Format: JPG, PNG (Max 5MB)</small></div><div id="wallpaper-preview" style="display:none"><img id="wallpaper-preview-img" alt="Preview"><p id="wallpaper-filename"></p></div><div class="form-group"><label>Urutan</label><input type="number" id="wallpaper-order" value="1" min="1"></div><div id="upload-progress" style="display:none"><div class="progress-bar"><div class="progress-fill" id="upload-progress-fill"></div></div><p id="upload-progress-text">Uploading...</p></div><div class="modal-actions"><button onclick="uploadWallpaper()" class="btn-primary" id="btn-upload-wallpaper"><i class="fas fa-upload"></i> Upload</button><button onclick="closeModal('upload-wallpaper-modal')" class="btn-secondary">Batal</button></div></div></div>
+    <div class="modal" id="upload-wallpaper-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('upload-wallpaper-modal')">&times;</span>
+            <h2>Upload Wallpaper</h2>
+            <div class="upload-area" id="wallpaper-upload-area">
+                <input type="file" id="wallpaper-file" accept="image/*" style="display:none">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & drop atau klik untuk browse</p>
+                <small>Format: JPG, PNG (Max 5MB)</small>
+            </div>
+            <div id="wallpaper-preview" style="display:none">
+                <img id="wallpaper-preview-img" alt="Preview">
+                <p id="wallpaper-filename"></p>
+            </div>
+            <div class="form-group">
+                <label>Urutan</label>
+                <input type="number" id="wallpaper-order" value="1" min="1">
+            </div>
+            <div id="upload-progress" style="display:none">
+                <div class="progress-bar"><div class="progress-fill" id="upload-progress-fill"></div></div>
+                <p id="upload-progress-text">Uploading...</p>
+            </div>
+            <div class="modal-actions">
+                <button onclick="uploadWallpaper()" class="btn-primary" id="btn-upload-wallpaper"><i class="fas fa-upload"></i> Upload</button>
+                <button onclick="closeModal('upload-wallpaper-modal')" class="btn-secondary">Batal</button>
+            </div>
+        </div>
+    </div>
     
-    <div class="modal" id="adab-modal"><div class="modal-content"><span class="close" onclick="closeModal('adab-modal')">&times;</span><h2 id="adab-modal-title">Tambah Adab</h2><form id="adab-form"><input type="hidden" name="id"><input type="hidden" name="type" id="adab-type"><div class="form-group"><label>Urutan</label><input type="number" name="order" min="1" max="10" required></div><div class="form-group"><label>Teks</label><textarea name="text" rows="3" required></textarea></div><div class="form-group"><label>Icon</label><select name="icon" required><option value="fas fa-door-open">🚪 Masuk Masjid</option><option value="fas fa-broom">🧹 Kebersihan</option><option value="fas fa-mobile-alt">📱 Silent HP</option><option value="fas fa-walking">🚶 Berjalan</option><option value="fas fa-hands-praying">🤲 Berdoa</option><option value="fas fa-shower">🚿 Mandi</option><option value="fas fa-tshirt">👕 Pakaian</option><option value="fas fa-clock">🕐 Waktu</option><option value="fas fa-volume-mute">🔇 Diam</option><option value="fas fa-pray">🕌 Shalat</option><option value="fas fa-book">📖 Quran</option><option value="fas fa-mosque">🕌 Masjid</option></select></div><div class="form-group"><label><input type="checkbox" name="active" checked> Aktif</label></div><div class="modal-actions"><button type="submit" class="btn-primary"><i class="fas fa-save"></i> Simpan</button><button type="button" onclick="closeModal('adab-modal')" class="btn-secondary">Batal</button></div></form></div></div>
+    <div class="modal" id="adab-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('adab-modal')">&times;</span>
+            <h2 id="adab-modal-title">Tambah Adab</h2>
+            <form id="adab-form">
+                <input type="hidden" name="id">
+                <input type="hidden" name="type" id="adab-type">
+                <div class="form-group">
+                    <label>Urutan</label>
+                    <input type="number" name="order" min="1" max="10" required>
+                </div>
+                <div class="form-group">
+                    <label>Teks</label>
+                    <textarea name="text" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Icon</label>
+                    <select name="icon" required>
+                        <option value="fas fa-door-open">🚪 Masuk Masjid</option>
+                        <option value="fas fa-broom">🧹 Kebersihan</option>
+                        <option value="fas fa-mobile-alt">📱 Silent HP</option>
+                        <option value="fas fa-walking">🚶 Berjalan</option>
+                        <option value="fas fa-hands-praying">🤲 Berdoa</option>
+                        <option value="fas fa-shower">🚿 Mandi</option>
+                        <option value="fas fa-tshirt">👕 Pakaian</option>
+                        <option value="fas fa-clock">🕐 Waktu</option>
+                        <option value="fas fa-volume-mute">🔇 Diam</option>
+                        <option value="fas fa-pray">🕌 Shalat</option>
+                        <option value="fas fa-book">📖 Quran</option>
+                        <option value="fas fa-mosque">🕌 Masjid</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" name="active" checked> Aktif</label>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Simpan</button>
+                    <button type="button" onclick="closeModal('adab-modal')" class="btn-secondary">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
     
-    <div class="modal" id="upload-announcement-modal"><div class="modal-content"><span class="close" onclick="closeModal('upload-announcement-modal')">&times;</span><h2>Upload Pengumuman</h2><div class="upload-area" id="announcement-upload-area"><input type="file" id="announcement-file" accept="image/*" style="display:none"><i class="fas fa-cloud-upload-alt"></i><p>Drag & drop atau klik</p><small>Format: JPG, PNG (Max 5MB)</small></div><div id="announcement-preview" style="display:none"><img id="announcement-preview-img" alt="Preview"><p id="announcement-filename"></p></div><div class="form-group"><label>Urutan</label><input type="number" id="announcement-order" value="1" min="1"></div><div id="announcement-upload-progress" style="display:none"><div class="progress-bar"><div class="progress-fill" id="announcement-progress-fill"></div></div><p id="announcement-progress-text">Uploading...</p></div><div class="modal-actions"><button onclick="uploadAnnouncement()" class="btn-primary" id="btn-upload-announcement"><i class="fas fa-upload"></i> Upload</button><button onclick="closeModal('upload-announcement-modal')" class="btn-secondary">Batal</button></div></div></div>
+    <div class="modal" id="upload-announcement-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('upload-announcement-modal')">&times;</span>
+            <h2>Upload Pengumuman</h2>
+            <div class="upload-area" id="announcement-upload-area">
+                <input type="file" id="announcement-file" accept="image/*" style="display:none">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & drop atau klik</p>
+                <small>Format: JPG, PNG (Max 5MB)</small>
+            </div>
+            <div id="announcement-preview" style="display:none">
+                <img id="announcement-preview-img" alt="Preview">
+                <p id="announcement-filename"></p>
+            </div>
+            <div class="form-group">
+                <label>Urutan</label>
+                <input type="number" id="announcement-order" value="1" min="1">
+            </div>
+            <div id="announcement-upload-progress" style="display:none">
+                <div class="progress-bar"><div class="progress-fill" id="announcement-progress-fill"></div></div>
+                <p id="announcement-progress-text">Uploading...</p>
+            </div>
+            <div class="modal-actions">
+                <button onclick="uploadAnnouncement()" class="btn-primary" id="btn-upload-announcement"><i class="fas fa-upload"></i> Upload</button>
+                <button onclick="closeModal('upload-announcement-modal')" class="btn-secondary">Batal</button>
+            </div>
+        </div>
+    </div>
     
-    <div class="modal" id="friday-wisdom-modal"><div class="modal-content"><span class="close" onclick="closeModal('friday-wisdom-modal')">&times;</span><h2 id="friday-wisdom-modal-title">Tambah Hadis Jumat</h2><form id="friday-wisdom-form"><input type="hidden" name="id"><div class="form-group"><label>Urutan (1-5)</label><input type="number" name="order" min="1" max="5" required></div><div class="form-group"><label>Teks Hadis</label><textarea name="text" rows="4" required></textarea></div><div class="form-group"><label>Referensi</label><input type="text" name="reference" required></div><div class="form-group"><label><input type="checkbox" name="active" checked> Aktif</label></div><div class="modal-actions"><button type="submit" class="btn-primary"><i class="fas fa-save"></i> Simpan</button><button type="button" onclick="closeModal('friday-wisdom-modal')" class="btn-secondary">Batal</button></div></form></div></div>
+    <div class="modal" id="friday-wisdom-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('friday-wisdom-modal')">&times;</span>
+            <h2 id="friday-wisdom-modal-title">Tambah Hadis Jumat</h2>
+            <form id="friday-wisdom-form">
+                <input type="hidden" name="id">
+                <div class="form-group">
+                    <label>Urutan (1-5)</label>
+                    <input type="number" name="order" min="1" max="5" required>
+                </div>
+                <div class="form-group">
+                    <label>Teks Hadis</label>
+                    <textarea name="text" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Referensi</label>
+                    <input type="text" name="reference" required>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" name="active" checked> Aktif</label>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Simpan</button>
+                    <button type="button" onclick="closeModal('friday-wisdom-modal')" class="btn-secondary">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
         
@@ -1604,10 +1773,18 @@
             renderWisdomsTable(filterDay);
         }
         
+        // ✅ FIX: Force clear hidden input ID
         function showAddWisdomModal() {
             document.getElementById('wisdom-modal-title').textContent = 'Tambah Hikmah';
-            document.getElementById('wisdom-form').reset();
-            document.querySelector('[name="id"]').value = '';
+            
+            const form = document.getElementById('wisdom-form');
+            form.reset();
+            
+            // ✅ FIX: Force clear hidden input ID
+            const idInput = form.querySelector('[name="id"]');
+            idInput.value = '';
+            idInput.removeAttribute('value');
+            
             openModal('wisdom-modal');
         }
         
@@ -2009,11 +2186,19 @@
             currentAdabType = type;
         }
         
+        // ✅ FIX: Force clear hidden input ID
         function showAddAdabModal(type) {
             currentAdabType = type;
             document.getElementById('adab-modal-title').textContent = `Tambah Adab ${type === 'normal' ? 'Normal' : 'Jumat'}`;
-            document.getElementById('adab-form').reset();
-            document.querySelector('[name="id"]').value = '';
+            
+            const form = document.getElementById('adab-form');
+            form.reset();
+            
+            // ✅ FIX: Force clear hidden input ID
+            const idInput = form.querySelector('[name="id"]');
+            idInput.value = '';
+            idInput.removeAttribute('value');
+            
             document.getElementById('adab-type').value = type;
             openModal('adab-modal');
         }
@@ -2146,6 +2331,19 @@
             const formData = new FormData(this);
             const schedule = Object.fromEntries(formData);
             
+            // ✅ FIX: Debug logging
+            console.log('='.repeat(50));
+            console.log('📤 SENDING FRIDAY SCHEDULE DATA:');
+            console.log('='.repeat(50));
+            console.log('Full schedule object:', schedule);
+            console.log('⏰ khutbah_time:', schedule.khutbah_time, '| Type:', typeof schedule.khutbah_time);
+            console.log('⏰ iqamah_time:', schedule.iqamah_time, '| Type:', typeof schedule.iqamah_time);
+            console.log('👤 imam_name:', schedule.imam_name);
+            console.log('👤 khatib_name:', schedule.khatib_name);
+            console.log('👤 muadzin1_name:', schedule.muadzin1_name);
+            console.log('👤 muadzin2_name:', schedule.muadzin2_name);
+            console.log('='.repeat(50));
+            
             const btn = document.getElementById('btn-save-friday-schedule');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
@@ -2157,13 +2355,20 @@
                     body: JSON.stringify(schedule)
                 });
                 const result = await response.json();
+                
+                // ✅ FIX: Log response
+                console.log('📥 SERVER RESPONSE:', result);
+                
                 if (result.success) {
                     showToast('Jadwal Jumat disimpan!', 'success');
+                    console.log('✅ Friday schedule saved successfully');
                 } else {
                     showToast('Gagal: ' + result.error, 'error');
+                    console.error('❌ Save failed:', result.error);
                 }
             } catch (error) {
                 showToast('Error: ' + error.message, 'error');
+                console.error('❌ Network error:', error);
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-save"></i> Simpan';
@@ -2236,7 +2441,7 @@
             
             selectedAnnouncementFile = file;
             
-            const reader = new FileReader();u
+            const reader = new FileReader();
             reader.onload = (e) => {
                 document.getElementById('announcement-preview-img').src = e.target.result;
                 document.getElementById('announcement-filename').textContent = file.name;
@@ -2423,10 +2628,18 @@
             `).join('');
         }
         
+        // ✅ FIX: Force clear hidden input ID
         function showAddFridayWisdomModal() {
             document.getElementById('friday-wisdom-modal-title').textContent = 'Tambah Hadis Jumat';
-            document.getElementById('friday-wisdom-form').reset();
-            document.querySelector('#friday-wisdom-form [name="id"]').value = '';
+            
+            const form = document.getElementById('friday-wisdom-form');
+            form.reset();
+            
+            // ✅ FIX: Force clear hidden input ID
+            const idInput = form.querySelector('[name="id"]');
+            idInput.value = '';
+            idInput.removeAttribute('value');
+            
             openModal('friday-wisdom-modal');
         }
         
