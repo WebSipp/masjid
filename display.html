@@ -1,9 +1,10 @@
+<!-- FILE 3: display.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display Digital - Masjid Al-Ikhlas</title>
+    <title>Display Digital - Masjid Baiturrahman STMIK Tazkia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -954,7 +955,7 @@
 <body>
     <!-- FULLSCREEN OVERLAY -->
     <div class="fullscreen-overlay" id="fullscreen-overlay">
-        <h2>Display Digital Masjid Al-Ikhlas</h2>
+        <h2>Display Digital Masjid Baiturrahman STMIK Tazkia</h2>
         <p>Untuk pengalaman terbaik, tampilan akan dibuka dalam mode layar penuh.</p>
         <button class="fullscreen-btn" id="enter-fullscreen-btn">
             <i class="fas fa-expand"></i> Buka Layar Penuh
@@ -1099,7 +1100,7 @@
 
     <script>
         
-        const API_URL = "https://script.google.com/macros/s/AKfycbzkVDKoXUPv7tvStIn23COgMQb0zxO_tEeTMLIUFKydZY8YSjTkZV_1aZr5zv8LkDyXLw/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbxPEsqPGNgpNXwbNwUxLm0yBdt46n5IKHvfKpJP3rpuUtf9xbpRf9a4myp6rPBfQnLCDQ/exec";
         
         // ========== GLOBAL VARIABLES ==========
         const prayerOrder = ["Subuh", "Syuruq", "Dzuhur", "Ashar", "Maghrib", "Isya"];
@@ -1153,8 +1154,20 @@
             setInterval(checkFridayMode, 60000);
             checkFridayMode();
             
-            // Refresh data every 30 minutes
-            setInterval(loadAllData, 30 * 60 * 1000);
+            // ✅ FIX: Refresh data every 2 minutes (was 30 minutes)
+            setInterval(loadAllData, 2 * 60 * 1000);
+            console.log('🔄 Auto-refresh enabled: Data will reload every 2 minutes');
+            
+            // ✅ FIX: Fast check every 30 seconds for wallpapers/announcements
+            setInterval(async () => {
+                if (currentMode === 'normal') {
+                    await reloadWallpapers();
+                } else if (currentMode === 'friday') {
+                    await reloadAnnouncements();
+                }
+            }, 30 * 1000);
+            
+            console.log('⚡ Fast check enabled: Wallpapers/Announcements checked every 30 seconds');
         });
         
         // ========== FULLSCREEN ==========
@@ -1239,25 +1252,9 @@
                     adabsFridayData = adabsFridayResult.data.filter(a => a.active);
                 }
                 
-                // Load wallpapers
-                const wallpapersRes = await fetch(`${API_URL}?path=wallpapers`);
-                const wallpapersResult = await wallpapersRes.json();
-                if (wallpapersResult.success) {
-                    wallpapersData = wallpapersResult.data
-                        .filter(w => w.active)
-                        .sort((a, b) => a.order - b.order);
-                    renderWallpapers();
-                }
-                
-                // Load announcements
-                const announcementsRes = await fetch(`${API_URL}?path=announcements`);
-                const announcementsResult = await announcementsRes.json();
-                if (announcementsResult.success) {
-                    announcementsData = announcementsResult.data
-                        .filter(a => a.active)
-                        .sort((a, b) => a.order - b.order);
-                    renderAnnouncements();
-                }
+                // ✅ FIX: Use smart reload functions
+                await reloadWallpapers();
+                await reloadAnnouncements();
                 
                 // Load Friday schedule
                 const scheduleRes = await fetch(`${API_URL}?path=friday-schedule`);
@@ -1275,6 +1272,54 @@
                 
             } catch (error) {
                 console.error("❌ Error loading data:", error);
+            }
+        }
+        
+        // ✅ FIX: Smart reload for wallpapers (only re-render if changed)
+        async function reloadWallpapers() {
+            try {
+                const response = await fetch(`${API_URL}?path=wallpapers`);
+                const result = await response.json();
+                if (result.success) {
+                    const activeWallpapers = result.data
+                        .filter(w => w.active)
+                        .sort((a, b) => a.order - b.order);
+                    
+                    if (JSON.stringify(activeWallpapers) !== JSON.stringify(wallpapersData)) {
+                        console.log('🔄 Wallpapers changed, re-rendering...');
+                        wallpapersData = activeWallpapers;
+                        renderWallpapers();
+                        wallpaperIndex = 0;
+                    } else {
+                        console.log('✅ Wallpapers unchanged');
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error reloading wallpapers:', error);
+            }
+        }
+        
+        // ✅ FIX: Smart reload for announcements
+        async function reloadAnnouncements() {
+            try {
+                const response = await fetch(`${API_URL}?path=announcements`);
+                const result = await response.json();
+                if (result.success) {
+                    const activeAnnouncements = result.data
+                        .filter(a => a.active)
+                        .sort((a, b) => a.order - b.order);
+                    
+                    if (JSON.stringify(activeAnnouncements) !== JSON.stringify(announcementsData)) {
+                        console.log('🔄 Announcements changed, re-rendering...');
+                        announcementsData = activeAnnouncements;
+                        renderAnnouncements();
+                        announcementIndex = 0;
+                    } else {
+                        console.log('✅ Announcements unchanged');
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error reloading announcements:', error);
             }
         }
         
@@ -1335,11 +1380,16 @@
         }
         
         // ========== WALLPAPERS ==========
+        // ✅ FIX: Debug logging
         function renderWallpapers() {
+            console.log('🖼️ Rendering wallpapers:', wallpapersData.length, 'active wallpapers');
+            console.log('Wallpapers data:', wallpapersData);
+            
             const container = document.getElementById('wallpaper-slider');
             container.innerHTML = '';
             
             if (wallpapersData.length === 0) {
+                console.log('⚠️ No active wallpapers found, using fallback');
                 // Fallback wallpapers
                 const fallback = [
                     'https://images.unsplash.com/photo-1548013146-72479768bada?w=1920',
@@ -1373,11 +1423,16 @@
         }
         
         // ========== ANNOUNCEMENTS ==========
+        // ✅ FIX: Debug logging
         function renderAnnouncements() {
+            console.log('📢 Rendering announcements:', announcementsData.length, 'active announcements');
+            console.log('Announcements data:', announcementsData);
+            
             const container = document.getElementById('announcement-container');
             container.innerHTML = '';
             
             if (announcementsData.length === 0) {
+                console.log('⚠️ No active announcements found');
                 const slide = document.createElement('div');
                 slide.className = 'announcement-slide active';
                 slide.innerHTML = '<p style="text-align: center; color: #666;">Belum ada pengumuman</p>';
